@@ -47,14 +47,11 @@ class controleur {
 		else {
 			$attributsRequis = array("titre", "cat", "importance");
 			if($this->verifierAttributsJson($donnees, $attributsRequis)) {
+				$resultat = (new tache)->insert($donnees->titre, $donnees->cat, $donnees->importance);
+
 				if($resultat != false) {
 					http_response_code(201);
-					if ((new tache)->insert($donnees->titre, $donnees->cat, $donnees->importance)) {
-						$renvoi = array("message" => "Ajout effectué avec succès", "id" => $resultat);
-					} else {
-						http_response_code(500);
-						$renvoi = array("message" => "Une erreur interne est survenue");
-					}
+					$renvoi = array("message" => "Ajout effectué avec succès", "id" => $resultat);
 				}
 				else {
 					http_response_code(500);
@@ -80,7 +77,7 @@ class controleur {
 		else {
 			$attributsRequis = array("titre", "cat", "importance");
 			if($this->verifierAttributsJson($donnees, $attributsRequis)) {
-				$resultat = (new tache)->update($donnees->titre, $donnees->cat, $donnees->importance);	
+				$resultat = (new tache)->update($donnees->id, $donnees->titre, $donnees->cat, $donnees->importance);	
 
 				if($resultat != false) {
 					http_response_code(200);
