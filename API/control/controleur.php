@@ -16,28 +16,28 @@ class controleur {
 		return $verifier;
 	}
 
-	public function getMachines() {
+	public function getTache() {
 		$donnees = null;
 
 		if(isset($_GET["id"])) {
-			if((new machine)->exists($_GET["id"])) {
+			if((new tache)->exists($_GET["id"])) {
 				http_response_code(200);
-				$donnees = (new machine)->get($_GET["id"]);
+				$donnees = (new tache)->get($_GET["id"]);
 			}
 			else {
 				http_response_code(404);
-				$donnees = array("message" => "Machine introuvable");
+				$donnees = array("message" => "Tache introuvable");
 			}
 		}
 		else {
 			http_response_code(200);
-			$donnees = (new machine)->getAll();
+			$donnees = (new tache)->getAll();
 		}
 		
 		(new vue)->transformerJson($donnees);
 	}
 
-	public function ajouterMachine() {
+	public function ajouterTache() {
 		$donnees = json_decode(file_get_contents("php://input"));
 		$renvoi = null;
 		if($donnees === null) {
@@ -45,23 +45,20 @@ class controleur {
 			$renvoi = array("message" => "JSON envoyé incorrect");
 		}
 		else {
-			$attributsRequis = array("nom", "fabriquant");
+			$attributsRequis = array("titre", "cat", "importance");
 			if($this->verifierAttributsJson($donnees, $attributsRequis)) {
-				if((new fabriquant)->exists($donnees->fabriquant)) {
-					$resultat = (new machine)->insert($donnees->nom, $donnees->fabriquant);
-					
-					if($resultat != false) {
-						http_response_code(201);
-						$renvoi = array("message" => "Ajout effectué avec succès", "idMachine" => $resultat);
-					}
-					else {
+				if($resultat != false) {
+					http_response_code(201);
+					if ((new tache)->insert($donnees->titre, $donnees->cat, $donnees->importance)) {
+						$renvoi = array("message" => "Ajout effectué avec succès", "id" => $resultat);
+					} else {
 						http_response_code(500);
 						$renvoi = array("message" => "Une erreur interne est survenue");
 					}
 				}
 				else {
-					http_response_code(400);
-					$renvoi = array("message" => "Le fabriquant spécifié n'existe pas");
+					http_response_code(500);
+					$renvoi = array("message" => "Une erreur interne est survenue");
 				}
 			}
 			else {
@@ -73,7 +70,7 @@ class controleur {
 		(new vue)->transformerJson($renvoi);
 	}
 
-	public function modifierMachine() {
+	public function modifierTache() {
 		$donnees = json_decode(file_get_contents("php://input"));
 		$renvoi = null;
 		if($donnees === null) {
@@ -81,23 +78,17 @@ class controleur {
 			$renvoi = array("message" => "JSON envoyé incorrect");
 		}
 		else {
-			$attributsRequis = array("id", "nom", "fabriquant");
+			$attributsRequis = array("titre", "cat", "importance");
 			if($this->verifierAttributsJson($donnees, $attributsRequis)) {
-				if((new fabriquant)->exists($donnees->fabriquant)) {
-					$resultat = (new machine)->update($donnees->id, $donnees->nom, $donnees->fabriquant);
-					
-					if($resultat != false) {
-						http_response_code(200);
-						$renvoi = array("message" => "Modification effectuée avec succès");
-					}
-					else {
-						http_response_code(500);
-						$renvoi = array("message" => "Une erreur interne est survenue");
-					}
+				$resultat = (new tache)->update($donnees->titre, $donnees->cat, $donnees->importance);	
+
+				if($resultat != false) {
+					http_response_code(200);
+					$renvoi = array("message" => "Modification effectuée avec succès");
 				}
 				else {
-					http_response_code(400);
-					$renvoi = array("message" => "Le fabriquant spécifié n'existe pas");
+					http_response_code(500);
+					$renvoi = array("message" => "Une erreur interne est survenue");
 				}
 			}
 			else {
@@ -109,43 +100,7 @@ class controleur {
 		(new vue)->transformerJson($renvoi);
 	}
 
-	public function miseEnServiceMachine() {
-		$donnees = json_decode(file_get_contents("php://input"));
-		$renvoi = null;
-		if($donnees === null) {
-			http_response_code(400);
-			$renvoi = array("message" => "JSON envoyé incorrect");
-		}
-		else {
-			$attributsRequis = array("id", "etat");
-			if($this->verifierAttributsJson($donnees, $attributsRequis)) {
-				if($donnees->etat == 0 || $donnees->etat == 1) {
-					$resultat = (new machine)->changeState($donnees->id, $donnees->etat);
-
-					if($resultat != false) {
-						http_response_code(200);
-						$renvoi = array("message" => "Changement d'état effectué avec succès");
-					}
-					else {
-						http_response_code(500);
-						$renvoi = array("message" => "Une erreur interne est survenue");
-					}
-				}
-				else {
-					http_response_code(400);
-					$renvoi = array("message" => "L'état spécifié est incorrect (attendu : 0 ou 1)");
-				}
-			}
-			else {
-				http_response_code(400);
-				$renvoi = array("message" => "Données manquantes");
-			}
-		}
-
-		(new vue)->transformerJson($renvoi);
-	}
-
-	public function supprimerMachine() {
+	public function supprimerTache() {
 		$donnees = json_decode(file_get_contents("php://input"));
 		$renvoi = null;
 		if($donnees === null) {
@@ -155,8 +110,8 @@ class controleur {
 		else {
 			$attributsRequis = array("id");
 			if($this->verifierAttributsJson($donnees, $attributsRequis)) {
-				if((new machine)->exists($donnees->id)) {
-					$resultat = (new machine)->delete($donnees->id);
+				if((new tache)->exists($donnees->id)) {
+					$resultat = (new tache)->delete($donnees->id);
 					
 					if($resultat != false) {
 						http_response_code(200);
@@ -169,7 +124,7 @@ class controleur {
 				}
 				else {
 					http_response_code(400);
-					$renvoi = array("message" => "La machine spécifiée n'existe pas");
+					$renvoi = array("message" => "La Tache spécifiée n'existe pas");
 				}
 			}
 			else {
@@ -180,26 +135,4 @@ class controleur {
 
 		(new vue)->transformerJson($renvoi);
 	}
-
-	public function getFabriquants() {
-		$donnees = null;
-
-		if(isset($_GET["id"])) {
-			if((new fabriquant)->exists($_GET["id"])) {
-				http_response_code(200);
-				$donnees = (new fabriquant)->get($_GET["id"]);
-			}
-			else {
-				http_response_code(404);
-				$donnees = array("message" => "Fabriquant introuvable");
-			}
-		}
-		else {
-			http_response_code(200);
-			$donnees = (new fabriquant)->getAll();
-		}
-		
-		(new vue)->transformerJson($donnees);
-	}
-
 }

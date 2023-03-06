@@ -16,53 +16,27 @@ try {
 // Chargement des fichiers MVC
 require("control/controleur.php");
 require("view/vue.php");
-require("model/fabriquant.php");
-require("model/machine.php");
+require("model/tache.php");
 
 // Routes et méthodes HTTP associées
-if(isset($_GET["action"])) {
-	switch($_GET["action"]) {
-		case "machine":
-			switch($_SERVER["REQUEST_METHOD"]) {
-				case "GET":
-					(new controleur)->getMachines();
-					break;
-				case "POST":
-					(new controleur)->ajouterMachine();
-					break;
-				case "PUT":
-					(new controleur)->modifierMachine();
-					break;
-				case "PATCH":
-					(new controleur)->miseEnServiceMachine();
-					break;
-				case "DELETE":
-					(new controleur)->supprimerMachine();
-					break;
-				default:
-					(new controleur)->erreur404();
-					break;
-			}
-			break;
 
-		case "fabriquant":
-			switch($_SERVER["REQUEST_METHOD"]) {
-				case "GET":
-					(new controleur)->getFabriquants();
-					break;
-				default:
-					(new controleur)->erreur404();
-					break;
-			}
-			break;
-		
-		// Route par défaut : erreur 404
-		default:
-			(new controleur)->erreur404();
-			break;
-	}
-}
-else {
-	// Pas d'action précisée = erreur 404
-	(new controleur)->erreur404();
+switch($_SERVER["REQUEST_METHOD"]) {
+	case "GET":
+		(new controleur)->getTache();
+		break;
+	case "POST":
+		(new controleur)->ajouterTache();
+		break;
+	case "PUT":
+		(new controleur)->modifierTache();
+		break;
+	case "PATCH":
+		(new controleur)->miseEnServiceTache();
+		break;
+	case "DELETE":
+		(new controleur)->supprimerTache();
+		break;
+	default:
+		(new controleur)->erreur404();
+		break;
 }

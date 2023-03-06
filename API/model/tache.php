@@ -1,6 +1,6 @@
 <?php
 
-class machine {
+class tache {
 	
 	// Objet PDO servant à la connexion à la base
 	private $pdo;
@@ -17,7 +17,7 @@ class machine {
 	}
 
 	public function getAll() {
-		$sql = "SELECT * FROM machine";
+		$sql = "SELECT * FROM tache";
 		
 		$req = $this->pdo->prepare($sql);
 		$req->execute();
@@ -26,7 +26,7 @@ class machine {
 	}
 
 	public function get($id) {
-		$sql = "SELECT * FROM machine WHERE idMachine = :id";
+		$sql = "SELECT * FROM tache WHERE id = :id";
 		
 		$req = $this->pdo->prepare($sql);
 		$req->bindParam(':id', $id, PDO::PARAM_INT);
@@ -36,7 +36,7 @@ class machine {
 	}
 
 	public function exists($id) {
-		$sql = "SELECT COUNT(*) AS nb FROM machine WHERE idMachine = :id";
+		$sql = "SELECT COUNT(*) AS nb FROM tache WHERE id = :id";
 		
 		$req = $this->pdo->prepare($sql);
 		$req->bindParam(':id', $id, PDO::PARAM_INT);
@@ -51,12 +51,13 @@ class machine {
 		}
 	}
 
-	public function insert($nom, $fabriquant) {
-		$sql = "INSERT INTO machine (nomMachine, etreEnService, idFabriquant) VALUES (:nom, 0, :fabriquant)";
+	public function insert($titre, $cat, $importance) {
+		$sql = "INSERT INTO tache (titre, cat, importance) VALUES (:titre, :cat, :importance)";
 		
 		$req = $this->pdo->prepare($sql);
-		$req->bindParam(':nom', $nom, PDO::PARAM_STR);
-		$req->bindParam(':fabriquant', $fabriquant, PDO::PARAM_INT);
+		$req->bindParam(':titre', $titre, PDO::PARAM_STR);
+		$req->bindParam(':cat', $cat, PDO::PARAM_STR);
+		$req->bindParam(':importance', $importance, PDO::PARAM_INT);
 		$result = $req->execute();
 		if($result === true) {
 			return $this->pdo->lastInsertId();
@@ -66,27 +67,19 @@ class machine {
 		}
 	}
 
-	public function update($id, $nom, $fabriquant) {
-		$sql = "UPDATE machine SET nomMachine = :nom, idFabriquant = :fabriquant WHERE idMachine = :id";
+	public function update($id, $titre, $cat, $importance) {
+		$sql = "UPDATE tache SET titre = :titre, cat = :cat, importance = :importance  WHERE id = :id";
 		
 		$req = $this->pdo->prepare($sql);
 		$req->bindParam(':id', $id, PDO::PARAM_INT);
-		$req->bindParam(':nom', $nom, PDO::PARAM_STR);
-		$req->bindParam(':fabriquant', $fabriquant, PDO::PARAM_INT);
-		return $req->execute();
-	}
-
-	public function changeState($id, $etat) {
-		$sql = "UPDATE machine SET etreEnService = :etat WHERE idMachine = :id";
-		
-		$req = $this->pdo->prepare($sql);
-		$req->bindParam(':id', $id, PDO::PARAM_INT);
-		$req->bindParam(':etat', $etat, PDO::PARAM_INT);
+		$req->bindParam(':titre', $titre, PDO::PARAM_STR);
+		$req->bindParam(':cat', $cat, PDO::PARAM_STR);
+		$req->bindParam(':importance', $importance, PDO::PARAM_INT);
 		return $req->execute();
 	}
 
 	public function delete($id) {
-		$sql = "DELETE FROM machine WHERE idMachine = :id";
+		$sql = "DELETE FROM tache WHERE id = :id";
 		
 		$req = $this->pdo->prepare($sql);
 		$req->bindParam(':id', $id, PDO::PARAM_INT);
