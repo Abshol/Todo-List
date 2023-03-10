@@ -6,29 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
     <div id="form">
         <p class="title">Créer une tâche</p>
 
-        <form action="localhost/Todo List/API/" method="POST">
-            <input type="text" name="titre" id="" placeholder="Titre">
-            <input type="text" name="cat" id="" placeholder="Catégorie">
-            <select name="importance" id="">
-                <option value="1">Très Peu Important</option>
-                <option value="2">Peu Important</option>
-                <option value="3">Important</option>
-                <option value="4">Très Important</option>
-                <option value="5">Très Très Important Omg Grouilles-toi ta mère</option>
-            </select>
-            <input type="submit" value="Bouton sa mère">
-        </form>
+        <input type="text" name="titre" id="titre" placeholder="Titre">
+        <input type="text" name="cat" id="cat" placeholder="Catégorie">
+        <select name="importance" id="importance">
+            <option value="1">Très Peu Important</option>
+            <option value="2">Peu Important</option>
+            <option value="3">Important</option>
+            <option value="4">Très Important</option>
+            <option value="5">URGENT</option>
+        </select>
+        <button type="button" id="creerTache">Créer tâche</button>
     </div>
+    <p id="message"></p>
 
     <div id="list">
 
     </div>
-<script src="script.js"></script>
+
 </body>
 </html>
 

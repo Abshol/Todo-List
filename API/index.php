@@ -1,4 +1,6 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept, Origin");
 session_start();
 
 // Test de connexion à la base
