@@ -17,7 +17,7 @@ class tache {
 	}
 
 	public function getAll() {
-		$sql = "SELECT * FROM tache";
+		$sql = "SELECT * FROM tache ORDER BY importance DESC";
 		
 		$req = $this->pdo->prepare($sql);
 		$req->execute();

@@ -40,11 +40,17 @@ class controleur {
 	public function ajouterTache() {
 		$donnees = json_decode(file_get_contents("php://input"));
 		$renvoi = null;
+		$pass = true;
+		if ($donnees->titre == "" || $donnees->cat == "" || $donnees->importance > 5 || $donnees->importance < 1) {
+			http_response_code(400);
+			$renvoi = array("message" => "Données manquantes");
+			$pass = false;
+		}
 		if($donnees === null) {
 			http_response_code(400);
 			$renvoi = array("message" => "JSON envoyé incorrect");
 		}
-		else {
+		else if ($pass) {
 			$attributsRequis = array("titre", "cat", "importance");
 			if($this->verifierAttributsJson($donnees, $attributsRequis)) {
 				$resultat = (new tache)->insert($donnees->titre, $donnees->cat, $donnees->importance);

@@ -32,9 +32,6 @@ switch($_SERVER["REQUEST_METHOD"]) {
 	case "PUT":
 		(new controleur)->modifierTache();
 		break;
-	case "PATCH":
-		(new controleur)->miseEnServiceTache();
-		break;
 	case "DELETE":
 		(new controleur)->supprimerTache();
 		break;
