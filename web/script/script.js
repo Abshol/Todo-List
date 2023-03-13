@@ -13,6 +13,7 @@ $(document).ready(function() {
         tableFill();
     });
     setInterval(tableFill, 60000);
+
     /**
      * When enter is pressed, it presses "Créer Tache"
      */
@@ -24,7 +25,7 @@ $(document).ready(function() {
           // Trigger the button element with a click
           $("#creerTache").click();
         }
-      }); 
+    }); 
       
     /**
      * Sends data to create task
@@ -76,22 +77,16 @@ $(document).ready(function() {
             }
         })
     }
+
     /**
-         * Modifies a task based on what the user inputed
-         * @param {*} tache id of the task
-         */
+     * Modifies a task based on what the user inputed
+     * @param {*} tache id of the task
+     */
     function modifier(tache) {
-        // Get the row associated with the clicked Modifier button
-        
-        // Find the input fields and select box in the row
         var titre = $('td.taskTitre'+tache+' input').val();
         var category = $('td.taskCat'+tache+' input').val();
         var importance = $('td.taskImp'+tache+' select').val();
-        console.log(tache)
-        console.log(titre);
-        console.log(category);
-        console.log(importance);
-        // Send PUT request with updated values
+
         $.ajax({
         method: "PUT",
         url: URI,
@@ -142,10 +137,8 @@ $(document).ready(function() {
                 var rows = [];
                 
 
-                // Iterate and append into <tr>s
                 $.each(data, function(i, tache) {
                     var $tableCell = $('<td>');
-                // Create the "Modifier" button
                     var modifButton = $('<button>', { 
                         class: 'task button modifier', 
                         text: 'Modifier', 
@@ -154,7 +147,6 @@ $(document).ready(function() {
                         modifier(tache.id);
                     });
 
-                    // Create the "Supprimer" button
                     var supprButton = $('<button>', {
                         class: 'task button supprimer', 
                         text: 'Supprimer', 
@@ -163,18 +155,14 @@ $(document).ready(function() {
                         supprimer(tache.id);
                     });
 
-                    //create input field for titre filled with the task title 
                     const inputTitre = $('<input type="text">').val(tache.titre);
                     
-                    //create input field for category filled with the task category
                     const inputCategory = $('<input type="text">').val(tache.cat);
                     
                     //create select box for importance filled options from 1 to 5
                     const selectImp = $('<select />', {
                         html: '<option value="">Veuillez choisir une option</option><option value="1">Très Peu Important</option><option value="2">Peu important</option><option value="3">Important</option><option value="4">Très Important</option><option value="5">URGENT</option>'
                     })
-
-                    // Set default value to be whatever the tache.importance is
                     selectImp.val(tache.importance);
 
                     // Build row, and append it to table body
