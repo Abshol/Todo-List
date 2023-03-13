@@ -9,11 +9,10 @@ $(document).ready(function() {
      * Loads data into the table
      */
     tableFill();
-
     $(document).on("click", "#recharger", function() {
         tableFill();
     });
-
+    setInterval(tableFill, 60000);
     /**
      * When enter is pressed, it presses "Créer Tache"
      */
@@ -77,6 +76,41 @@ $(document).ready(function() {
             }
         })
     }
+    /**
+         * Modifies a task based on what the user inputed
+         * @param {*} tache id of the task
+         */
+    function modifier(tache) {
+        // Get the row associated with the clicked Modifier button
+        
+        // Find the input fields and select box in the row
+        var titre = $('td.taskTitre'+tache+' input').val();
+        var category = $('td.taskCat'+tache+' input').val();
+        var importance = $('td.taskImp'+tache+' select').val();
+        console.log(tache)
+        console.log(titre);
+        console.log(category);
+        console.log(importance);
+        // Send PUT request with updated values
+        $.ajax({
+        method: "PUT",
+        url: URI,
+        contentType: "application/json",
+        data: JSON.stringify({ id: tache, titre: titre, cat: category, importance: importance }),
+        success: function (response) {
+            tableFill();
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        },
+        });
+    }
+
+    /**
+     * Translates the number of importance into text
+     * @param {*} imp Importance of the task (number)
+     * @returns String
+     */
     function importance(imp) {
         switch (imp) {
             case "1":
@@ -94,6 +128,9 @@ $(document).ready(function() {
         }
     }
 
+    /**
+     * Fills the table with the tasks
+     */
     function tableFill() {
         $('#taches').find('tbody').empty();
         $.ajax({
@@ -159,31 +196,5 @@ $(document).ready(function() {
                 console.error(error);
             }
         })
-    }
-
-    function modifier(tache) {
-        // Get the row associated with the clicked Modifier button
-        
-        // Find the input fields and select box in the row
-        var titre = $('td.taskTitre'+tache+' input').val();
-        var category = $('td.taskCat'+tache+' input').val();
-        var importance = $('td.taskImp'+tache+' select').val();
-        console.log(tache)
-        console.log(titre);
-        console.log(category);
-        console.log(importance);
-        // Send PUT request with updated values
-        $.ajax({
-          method: "PUT",
-          url: URI,
-          contentType: "application/json",
-          data: JSON.stringify({ id: tache, titre: titre, cat: category, importance: importance }),
-          success: function (response) {
-            tableFill();
-          },
-          error: function (xhr, status, error) {
-            console.error(error);
-          },
-        });
     }
 });
