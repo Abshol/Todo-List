@@ -142,9 +142,9 @@ $(document).ready(function() {
 
                     // Build row, and append it to table body
                     const row = $("<tr id='"+tache.id+"'>").append(
-                        $("<td class='taskTitre' id='"+tache.id+"'>").append(inputTitre),
-                        $("<td class='taskCat' id='"+tache.id+"'>").append(inputCategory),
-                        $("<td class='taskImp' id='"+tache.id+"'>").append(selectImp),
+                        $("<td class='taskTitre"+tache.id+"''>").append(inputTitre),
+                        $("<td class='taskCat"+tache.id+"''>").append(inputCategory),
+                        $("<td class='taskImp"+tache.id+"''>").append(selectImp),
                         $("<td>").append(modifButton),
                         $("<td>").append(supprButton),
                     );
@@ -163,12 +163,11 @@ $(document).ready(function() {
 
     function modifier(tache) {
         // Get the row associated with the clicked Modifier button
-        var $row = $(this).closest('tr');
         
         // Find the input fields and select box in the row
-        var titre = $row.find('.taskTitre input').val();
-        var category = $row.find('.taskCat input').val();
-        var importance = $row.find('.taskImp select').val();
+        var titre = $('td.taskTitre'+tache+' input').val();
+        var category = $('td.taskCat'+tache+' input').val();
+        var importance = $('td.taskImp'+tache+' select').val();
         console.log(tache)
         console.log(titre);
         console.log(category);
@@ -180,7 +179,7 @@ $(document).ready(function() {
           contentType: "application/json",
           data: JSON.stringify({ id: tache, titre: titre, cat: category, importance: importance }),
           success: function (response) {
-            console.log(response);
+            tableFill();
           },
           error: function (xhr, status, error) {
             console.error(error);
