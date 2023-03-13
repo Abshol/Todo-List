@@ -5,40 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="jquery.js"></script>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="script/jquery.js"></script>
+    <script src="script/script.js"></script>
 </head>
 <body>
-    <div id="form">
-        <p class="title">Créer une tâche</p>
+    <div class="container">
+        <div id="form">
+            <div class="Ftitle">Créer une tâche</div>
 
-        <input type="text" name="titre" id="titre" placeholder="Titre" required>
-        <input type="text" name="cat" id="cat" placeholder="Catégorie" required>
-        <select name="importance" id="importance" required>
-            <option value="1">Très Peu Important</option>
-            <option value="2">Peu Important</option>
-            <option value="3">Important</option>
-            <option value="4">Très Important</option>
-            <option value="5">URGENT</option>
-        </select>
-        <button type="button" id="creerTache">Créer tâche</button>
+            <div class="Fbody">
+                <input type="text" name="titre" id="titre" placeholder="Titre" required>
+                <input type="text" name="cat" id="cat" placeholder="Catégorie" required>
+                <select name="importance" id="importance" required>
+                    <option value="1">Très Peu Important</option>
+                    <option value="2">Peu Important</option>
+                    <option value="3">Important</option>
+                    <option value="4">Très Important</option>
+                    <option value="5">URGENT</option>
+                </select>
+                <button type="button" id="creerTache" class="form button">Créer tâche</button>
+            </div>
+            
+        </div>
+        
+        <div id="list">
+            <table id="taches">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Categorie</th>
+                        <th>Importance</th>
+                        <th colspan='2' width="150px"><button id="recharger"><img src="style/reload10x10.png"></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
-     
-    <div id="list">
-        <table id="taches">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Categorie</th>
-                    <th>importance</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-
 </body>
 </html>
 

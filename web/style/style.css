@@ -1,0 +1,84 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    background: #e9e9e9;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    border-radius:  10px 10px 0 0;
+    background: #2596be;
+    width: 100%;
+}
+
+#creerTache { 
+    margin: 0 3% 0 3%;
+    padding: 0 5% 0 5%;
+}
+
+input[type='text'], select {
+    border-radius: 5px;
+    border: none;
+    margin: 0.5%;
+}
+
+.Fbody {
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    margin:auto;
+    margin-bottom: 4%;
+}
+
+.Ftitle {
+    background: #207b9c;
+    margin-bottom: 4%;
+    border-radius: 10px 10px 0 0 ;
+    text-align: center;
+}
+
+button {
+    border-radius: 5px;
+    margin: auto;
+    border: none;
+}
+
+.task.button {
+    background: #e7987b;
+    margin: 5%;
+}
+
+.form.button {
+    background: #aedcec;
+}
+
+table, th, td, tr {
+    align-items: center;
+    text-align: center;
+    padding: 0.4%;
+}
+
+#recharger {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+#list {
+    background: #be4d25;
+    border-radius: 0 0 10px 10px;
+}
